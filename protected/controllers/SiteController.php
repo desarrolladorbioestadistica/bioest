@@ -118,8 +118,8 @@ class SiteController extends Controller{
             $this->render("loadfileproducts");
         }
         public function actionCreateExcel(){
-            ini_set('post_max_size', '-1');
-            ini_set('memory_limit', '-1');
+            ini_set('post_max_size', '0');
+            ini_set('memory_limit', '0');
             ini_set('max_execution_time', '0');
             $dir = Yii::getPathOfAlias('webroot')."/protected/uploads/";
 //            print_r($_FILES['inputFile']);exit();

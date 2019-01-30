@@ -60,9 +60,9 @@ return array(
 		
 		'db'=>array(
                     'tablePrefix'=>'',
-                    'connectionString' => 'pgsql:host=localhost;port=5432;dbname=bestadistica',
-                    'username'=>'maoknox',
-                    'password'=>'Nevulos$',
+                    'connectionString' => 'pgsql:host=ec2-54-83-17-151.compute-1.amazonaws.com;port=5432;dbname=d3e7p40q37d5bg',
+                    'username'=>'tgiuysactejfvo',
+                    'password'=>'01405c885b129015f6b736714fc3715a027184d75a083c35737d0c714868d95c',
                     'charset'=>'UTF8',
                 ),
 //		'db'=>array(

@@ -802,6 +802,7 @@ class LoadFiles extends CFormModel{
                     $modelRegimenAdministrador= RegimenAdministrador::model()->findByAttributes(array("id_regimenadmon"=>$data[7]));
                     $modelQuinquenio= Quinquenio::model()->findByAttributes(array("id_quinquenio"=>$data[4]));
                     $modelZona= Zona::model()->findByAttributes(array("id_zona"=>$data[6]));
+                    $modelMunicipio= Municipio::model()->findByAttributes(array("idvar_municipio"=>$data[11]));
                     if(empty($modelTipoAfiliado->id_tipoafiliado)){throw new Exception("1");}else{$data[1]=$modelTipoAfiliado->id_tipoafiliado;}
                     if(empty($modelGenero->id_genero)){throw new Exception("2");}else{$data[2]=$modelGenero->id_genero;}
                     if(empty($modelAdministrador->id_admin)){throw new Exception("3");}else{$data[3]=$modelAdministrador->id_admin;}
@@ -809,6 +810,7 @@ class LoadFiles extends CFormModel{
                     if(empty($modelRegimenAdministrador->id_regimenadmon)){throw new Exception("7");}else{$data[7]=$modelRegimenAdministrador->id_regimenadmon;}
                     if(empty($modelQuinquenio->id_quinquenio)){throw new Exception("4");}
                     if(empty($modelZona->id_zona)){throw new Exception("6");}
+                    if(empty($modelMunicipio->id_municipio)){throw new Exception("11");}else{$data[11]=$modelMunicipio->id_municipio;}
                     $modelMes= Mes::model()->findByAttributes(array("nombre_mes"=>$data[9]));
                     $data[9]=$modelMes->id_mes;
                     $query->bindParam(":id_tipoafiliado",$data[1]);
@@ -821,7 +823,7 @@ class LoadFiles extends CFormModel{
                     $query->bindParam(":anio_afiliacion",$data[8]);
                     $query->bindParam(":mes_afiliacion",$data[9]);
                     $query->bindParam(":total_poblacion",$data[10]);
-                    $query->bindParam(":id_municipio",$data[10]);
+                    $query->bindParam(":id_municipio",$data[11]);
                     $query->execute(); 
                 }
                 catch(Exception $e){
@@ -1836,84 +1838,102 @@ c996
             <th>modelo</th>
             <th>referencia</th>
             <th>uso o destino</th>
-            <th>técnica de diagnóstico</th>
-            <th>serial</th>
-            <th>fabricante</th>
-            <th>pais s origen</th>
             <th>registro invima</th>
-            <th>vencimiento</th>
-            <th>expediente</th>
-            <th>mercancía</th>
             <th>cantidad</th>
-            <th>presentación</th>
-            <th>domicilio</th></tr>';
+            <th>presentación</th>';
         $order   = array("/\bDO\b/",
+            "/NOMBRE PRODUCTO/",
+            "/NOMBRE DEL PRODUCTO/",
             "/PRODUCTO:/",
             "/PRODUCTO=/",
             "/PRODUCTO./",
             "/PRODUCTO\_/",
             "/\bPRODUCTO\b/",
             "/\bMARCA\b/",
+            "/\bMARCA:\b/",
+            "/MODELO: SIN MODELO/",
             "/\bMODELO\b/",
             "/\bMOD\b/",
+            "/\bMODELO:\b/",
             "/\bREFERENCIA\b/",
+            "/\bREFERENCIA\_\b/",
+            "/\bREFERENCIA:\b/",
             "/\bREF\b/",
+            "/\bREF ERENCIA\b/",
             "/USO O DESTINO/",
             "/USO ESPECIFICO DE LA PARTE\s/",
             "/USO:/",
-            "/TECNICA DE DIAGNOSTICO:/",
-            "/FABRICANTES LEGALES/",
-            "/PAIS DE ORIGEN/",
+            "/USO O DESTINO:/",
+            "/USO ESPECIFICO:/",
             "/REGISTRO SANITARIO INVIMA/",
             "/INVIMA NO./",
             "/REG. SANITARIO INVIMA/",
+            "/REGISTRO SANITARIO:/",
+            "/REGISTRO DE IMPORTACION:/",
             "/PERMISO DE COMERCIALIZACION INVIMA/",
             "/RSI: INVIMA/",
-            "/\bVENCIMIENTO\b/",
-            "/\bVIGENCIA\b/",
-            "/\bEXPEDIENTE\b/",
-            "/\bEXP\b/",
-            "/MERCANCIA NUEVA/",
-            "/SERIAL NO/",
-            "/\bSERIAL\b/",
-            "/\bSN\b/",
-            "/\bDOMICILIO\b/",
+            "/REGISTRO S ANITARIO INVIMA NRO./",
+            "/REGISTRO SANITARIO I NVIMA NRO./",
+            "/REGISTRO SANIT ARIO INVIMA NRO./",
+            "/REGISTRO SAN ITARIO INVIMA NRO./",
+            "/REGISTRO SANITARIO INV IMA NRO./",
+            "/REGISTRO SANITARIO INVI MA NRO./",
+            "/REGISTRO SANI TARIO INVIMA NRO./",
+            "/REGISTRO SA NITARIO INVIMA NRO./",
+            "/REGISTRO SANITA RIO INVIMA NRO./",
+            "/REGISTRO SANITAR IO INVIMA NRO./",
+            "/REGISTRO SANITARIO: INVIMA/",
+            "/MARCAREGISTRADA ANTE INVIMA:/",
+            "/MARCA REGISTRADA ANTE INVIMA:/",
             "/PRESENTACION COMERCIAL:/",
             "/\bCAJA\b/",
             "/\bCANTIDAD\b:/",
             "/\bCANTIDAD\b/",
             "/\bCANT\b/");
         $replace = array("|do|DO ",
+            "|Np|pri|--|PROUDCTO|-|",
+            "|Np|pri|--|PROUDCTO|-|",
             "|p|pr|--|PROUDCTO|-|",
             "|p|pr|--|PROUDCTO|-|",
             "|p|pr|--|PROUDCTO|-|",
             "|p|pr|--|PROUDCTO|-|",
             "|p|pr|--|PROUDCTO|-|",
             "|-|ma|--|MARCA|-|",
+            "|-|ma|--|MARCA|-|",
+            "|-|Smo|--|MODELO|-|",
             "|-|mo|--|MODELO|-|",
             "|-|mo|--|MODELO|-|",
+            "|-|mo|--|MODELO|-|",
+            "|-|ref|--|REFERENCIA|-|",
+            "|-|ref|--|REFERENCIA|-|",
+            "|-|ref|--|REFERENCIA|-|",
             "|-|ref|--|REFERENCIA|-|",
             "|-|ref|--|REFERENCIA|-|",
             "|-|ud|--|USO O DESTINO|-|",
             "|-|ud|--|USO O DESTINO|-|",
             "|-|udi|--|USO O DESTINO|-|",
-            "|-|td|--|TECNICA DE DIAGNOSTICO|-|",
-            "|-|fab|--|FABRICANTES LEGALES|-|",
-            "|-|po|--|PAIS DE ORIGEN|-|",
+            "|-|udi|--|USO O DESTINO|-|",
+            "|-|udi|--|USO O DESTINO|-|",
             "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
             "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
             "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
             "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
             "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
-            "|-|venc|--|VENCIMIENTO|-|",
-            "|-|venc|--|VENCIMIENTO|-|",
-            "|-|exp|--|EXPEDIENTE|-|",
-            "|-|exp|--|EXPEDIENTE|-|",
-            "|-|mn|--|MERCANCIA NUEVA|-|",
-            "|-|ser|--|SERIAL|-|",
-            "|-|ser|--|SERIAL|-|",
-            "|-|ser|--|SERIAL|-|",
-            "|-|dom|--|DOMICILIO|-|",
+            "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
+            "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
+            "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
+            "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
+            "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
+            "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
+            "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
+            "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
+            "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
+            "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
+            "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
+            "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
+            "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
+            "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
+            "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
             "|-|caja|--|CAJAS|-|",
             "|-|caja|--|CAJAS|-|",
             "|-|cant|--|CANTIDAD|-|",
@@ -1921,23 +1941,29 @@ c996
             "|-|cant|--|CANTIDAD|-|");
         $psSd=array();
         $orderi   = array("/\bDO\b/",
+            "/NOMBRE PRODUCTO/i",
+            "/NOMBRE DEL PRODUCTO/i",
             "/PRODUCTO:/i",
             "/PRODUCTO=/i",
             "/PRODUCTO./i",
             "/PRODUCTO_/i",
             "/\bPRODUCTO\b/i");
 	$replacei = array("|do|DO ",
+            "|pi|PROUDCTO",
+            "|pi|PROUDCTO",
             "|p|PROUDCTO",
             "|p|PROUDCTO",
             "|p|PROUDCTO",
             "|p|PROUDCTO",
             "|p|PROUDCTO");	
         $consec="";
+        
         foreach($dataAsAssocArray as $alpha=>$data){
             
 //            continue;
             if($alpha>0){
-                $data[2]=$data[2];
+                        
+                $data[2]= mb_strtoupper($data[2]);
                 $auxCon=preg_replace($order, $replace,$data[2]);
                 $auxConII=preg_replace($orderi, $replacei,$data[2]);
                 $ps=explode("|p|",$auxCon);
@@ -1945,7 +1971,9 @@ c996
                 $psSd[$alpha-2]=$psi;
                 $arrProd[$alpha]["idprod"]=$data[0];
                 $arrProd[$alpha]["do"]=$ps[0];
-                
+//                echo "<pre>";
+//                        print_r($auxCon);
+//                        echo "</pre>";
                 unset($ps[0]);
                 foreach($ps as $ini=>$ab){
                     $pii=explode("|-|",$ab);
@@ -1964,12 +1992,12 @@ c996
                                 case "ma":
                                         $aux=$pk+1;
                                         //echo $aux."------marca - ".$pii[$pk+1]."<br>";
-                                        $arrProd[$alpha]["cont"][$ini][1]=$pii[$pk+1];
+                                        $arrProd[$alpha]["cont"][$ini][1]= trim($pii[$pk+1],":,.");
                                 break;
                                 case "mo":
                                         $aux=$pk+1;
                                         //echo $aux."------modelo - ".$pii[$pk+1]."<br>";
-                                        $arrProd[$alpha]["cont"][$ini][2]=$pii[$pk+1];
+                                        $arrProd[$alpha]["cont"][$ini][2]=trim($pii[$pk+1],":,.");
 
                                 break;
                                 case "ref":
@@ -1997,60 +2025,20 @@ c996
                                                 $arrProd[$alpha]["cont"][$ini][4].=$pii[$pk+1];
                                         }
                                 break;
-                                case "td":
-                                        $aux=$pk+1;
-                                        //echo $aux."------tecnica de diagnóstico - ".$pii[$pk+1]."<br>";
-                                        $arrProd[$alpha]["cont"][$ini][5]=$pii[$pk+1];
-                                break;
-                                case "ser":
-                                        $aux=$pk+1;
-                                        //echo $aux."------serial - ".$pii[$pk+1]."<br>";
-                                        $arrProd[$alpha]["cont"][$ini][6]=$pii[$pk+1];
-                                break;
-                                case "fab":
-                                        $aux=$pk+1;
-                                        //echo $aux."------fabricante - ".$pii[$pk+1]."<br>";
-                                        $arrProd[$alpha]["cont"][$ini][7]=$pii[$pk+1];
-                                break;
-                                case "po":
-                                        $aux=$pk+1;
-                                        //echo $aux."------país de origen - ".$pii[$pk+1]."<br>";
-                                        $arrProd[$alpha]["cont"][$ini][8]=$pii[$pk+1];
-                                break;
                                 case "rinv":
                                         $aux=$pk+1;
                                         //echo $aux."------registro invima - ".$pii[$pk+1]."<br>";
-                                        $arrProd[$alpha]["cont"][$ini][9]=$pii[$pk+1];
-                                break;
-                                case "venc":
-                                        $aux=$pk+1;
-                                        //echo $aux."------vencimiento - ".$pii[$pk+1]."<br>";
-                                        $arrProd[$alpha]["cont"][$ini][10]=$pii[$pk+1];
-                                break;
-                                case "exp":
-                                        $aux=$pk+1;
-                                        //echo $aux."------expediente - ".$pii[$pk+1]."<br>";
-                                        $arrProd[$alpha]["cont"][$ini][11]=$pii[$pk+1];
-                                break;
-                                case "mn":
-                                        $aux=$pk+1;
-                                        //echo $aux."------mercancia nueva - ".$pii[$pk+1]."<br>";
-                                        $arrProd[$alpha]["cont"][$ini][12]=$pii[$pk+1];
+                                        $arrProd[$alpha]["cont"][$ini][5]=$pii[$pk+1];
                                 break;
                                 case "cant":
                                         $aux=$pk+1;
                                         //echo $aux."------mercancia nueva - ".$pii[$pk+1]."<br>";
-                                        $arrProd[$alpha]["cont"][$ini][13]=$pii[$pk+1];
+                                        $arrProd[$alpha]["cont"][$ini][6]=$pii[$pk+1];
                                 break;
                                 case "caja":
                                         $aux=$pk+1;
                                         //echo $aux."------mercancia nueva - ".$pii[$pk+1]."<br>";
-                                        $arrProd[$alpha]["cont"][$ini][14]=$pii[$pk+1];
-                                break;
-                                case "dom":
-                                        $aux=$pk+1;
-                                        //echo $aux."------mercancia nueva - ".$pii[$pk+1]."<br>";
-                                        $arrProd[$alpha]["cont"][$ini][15]=$pii[$pk+1];
+                                        $arrProd[$alpha]["cont"][$ini][7]=$pii[$pk+1];
                                 break;
                             }
                         }
@@ -2064,29 +2052,29 @@ c996
 //            echo "</pre>";
 //            
 //        exit();
-        foreach($arrProd as $lp=>$prod){
-            if(isset($prod["cont"]) && is_array($prod["cont"])){
-                foreach($prod["cont"] as  $lpi=>$lpas){
-                    for($i=0;$i<=15;$i++){
-                        if($i==14 && isset($lpas[13])){
-                            $pres=explode(" ",$arrProd[$lp]["cont"][$lpi][13]);
-                            if(is_array($pres) && count($pres)>=2){
-                                if(isset($pres[2])){
-                                        $arrProd[$lp]["cont"][$lpi][$i]=$pres[2];
-                                }
-                                else{
-                                        $arrProd[$lp]["cont"][$lpi][$i]="S.I";
-                                }
-                            }
-                        }
-                        else if(!isset($lpas[$i])){
-                                $arrProd[$lp]["cont"][$lpi][$i]="S.I";
-                        }
-                    }
-                    ksort($arrProd[$lp]["cont"][$lpi]);
-                }
-            }
-        }
+//        foreach($arrProd as $lp=>$prod){
+//            if(isset($prod["cont"]) && is_array($prod["cont"])){
+//                foreach($prod["cont"] as  $lpi=>$lpas){
+//                    for($i=0;$i<=7;$i++){
+//                        if($i==6 && isset($lpas[6])){
+//                            $pres=explode(" ",$arrProd[$lp]["cont"][$lpi][6]);
+//                            if(is_array($pres) && count($pres)>=2){
+//                                if(isset($pres[2])){
+//                                        $arrProd[$lp]["cont"][$lpi][$i]=$pres[2];
+//                                }
+//                                else{
+//                                        $arrProd[$lp]["cont"][$lpi][$i]="S.I";
+//                                }
+//                            }
+//                        }
+//                        else if(!isset($lpas[$i])){
+//                                $arrProd[$lp]["cont"][$lpi][$i]="S.I";
+//                        }
+//                    }
+//                    ksort($arrProd[$lp]["cont"][$lpi]);
+//                }
+//            }
+//        }
         
         foreach($arrProd as $lp=>$prod){
             $cont=0;
