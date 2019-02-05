@@ -2015,12 +2015,12 @@ c996
                                 case "ma":
                                         $aux=$pk+1;
                                         //echo $aux."------marca - ".$pii[$pk+1]."<br>";
-                                        $arrProd[$alpha]["cont"][$ini][1]=$pii[$pk+1];
+                                        $arrProd[$alpha]["cont"][$ini][1]=trim($pii[$pk+1],":,.");
                                 break;
                                 case "mo":
                                         $aux=$pk+1;
                                         //echo $aux."------modelo - ".$pii[$pk+1]."<br>";
-                                        $arrProd[$alpha]["cont"][$ini][2]=$pii[$pk+1];
+                                        $arrProd[$alpha]["cont"][$ini][2]=trim($pii[$pk+1],":,.");
                                 break;
                                 case "ref":
                                         $aux=$pk+1;
