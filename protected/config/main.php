@@ -65,7 +65,6 @@ return array(
                     'password'=>'*****',
                     'charset'=>'UTF8',
                 ),
-            
 //		'db'=>array(
 //                    'tablePrefix'=>'',
 //                    'connectionString' => 'pgsql:host=localhost;port=5432;dbname=telemed',
