@@ -60,9 +60,9 @@ return array(
 		
 		'db'=>array(
                     'tablePrefix'=>'',
-                    'connectionString' => 'pgsql:host=localhost;port=5432;dbname=bestadistica',
-                    'username'=>'***',
-                    'password'=>'*****',
+                    'connectionString' => 'pgsql:host=pg-e97123a-hingato-39eb.aivencloud.com;port=10518;dbname=bioest',
+                    'username'=>'avnadmin',
+                    'password'=>'wc06staicxb5ag4h',
                     'charset'=>'UTF8',
                 ),
 //		'db'=>array(
