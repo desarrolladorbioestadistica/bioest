@@ -57,7 +57,6 @@ return array(
 //			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
 //		),
 		// uncomment the following to use a MySQL database
-		
 		'db'=>array(
                     'tablePrefix'=>'',
                     'connectionString' => 'pgsql:host=pg-e97123a-hingato-39eb.aivencloud.com;port=10518;dbname=bioest',
