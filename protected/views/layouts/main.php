@@ -103,33 +103,6 @@
             <div class="menu">
                 <ul class="list">
                     <li class="header">NAVEGACIÓN PRINCIPAL</li>
-                    <li class="active">
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">description</i>
-                            <span>Subir Archivos</span>
-                        </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/site/formLoadPFiles">
-                                    <i class="material-icons">description</i>
-                                    <span>Primarios</span>
-                                </a>
-                                
-                            </li>
-                            <li>
-                                <a href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/site/formLoadSFiles">
-                                    <i class="material-icons">description</i>
-                                    <span>Secundarios</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/site/formDisgregateProducts">
-                                    <i class="material-icons">description</i>
-                                    <span>Desagregar productos</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">text_fields</i>
