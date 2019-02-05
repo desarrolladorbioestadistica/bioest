@@ -64,6 +64,7 @@ return array(
                     'username'=>'avnadmin',
                     'password'=>'wc06staicxb5ag4h',
                     'charset'=>'UTF8',
+                    
                 ),
 //		'db'=>array(
 //                    'tablePrefix'=>'',
