@@ -1814,7 +1814,7 @@ c996
         
     }
     public function createExcel($dir,$filename){
-        ini_set('memory_limit', -1);
+                ini_set('memory_limit', -1);
         require_once $dir. "../../vendor/autoload.php";
             $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReaderForFile($dir.$filename);
             $spreadSheet = $reader->load($dir.$filename);
@@ -1838,18 +1838,26 @@ c996
             <th>modelo</th>
             <th>referencia</th>
             <th>uso o destino</th>
+            <th>técnica de diagnóstico</th>
+            <th>serial</th>
+            <th>fabricante</th>
+            <th>pais s origen</th>
             <th>registro invima</th>
+            <th>vencimiento</th>
+            <th>expediente</th>
+            <th>mercancía</th>
             <th>cantidad</th>
-            <th>presentación</th>';
+            <th>presentación</th>
+            <th>domicilio</th></tr>';
         $order   = array("/\bDO\b/",
-            "/NOMBRE PRODUCTO/",
+             "/NOMBRE PRODUCTO/",
             "/NOMBRE DEL PRODUCTO/",
             "/PRODUCTO:/",
             "/PRODUCTO=/",
             "/PRODUCTO./",
             "/PRODUCTO\_/",
             "/\bPRODUCTO\b/",
-            "/\bMARCA\b/",
+             "/\bMARCA\b/",
             "/\bMARCA:\b/",
             "/MODELO: SIN MODELO/",
             "/\bMODELO\b/",
@@ -1865,7 +1873,10 @@ c996
             "/USO:/",
             "/USO O DESTINO:/",
             "/USO ESPECIFICO:/",
-            "/REGISTRO SANITARIO INVIMA/",
+            "/TECNICA DE DIAGNOSTICO:/",
+            "/FABRICANTES LEGALES/",
+            "/PAIS DE ORIGEN/",
+             "/REGISTRO SANITARIO INVIMA/",
             "/INVIMA NO./",
             "/REG. SANITARIO INVIMA/",
             "/REGISTRO SANITARIO:/",
@@ -1885,13 +1896,22 @@ c996
             "/REGISTRO SANITARIO: INVIMA/",
             "/MARCAREGISTRADA ANTE INVIMA:/",
             "/MARCA REGISTRADA ANTE INVIMA:/",
+            "/\bVENCIMIENTO\b/",
+            "/\bVIGENCIA\b/",
+            "/\bEXPEDIENTE\b/",
+            "/\bEXP\b/",
+            "/MERCANCIA NUEVA/",
+            "/SERIAL NO/",
+            "/\bSERIAL\b/",
+            "/\bSN\b/",
+            "/\bDOMICILIO\b/",
             "/PRESENTACION COMERCIAL:/",
             "/\bCAJA\b/",
             "/\bCANTIDAD\b:/",
             "/\bCANTIDAD\b/",
             "/\bCANT\b/");
         $replace = array("|do|DO ",
-            "|Np|pri|--|PROUDCTO|-|",
+           "|Np|pri|--|PROUDCTO|-|",
             "|Np|pri|--|PROUDCTO|-|",
             "|p|pr|--|PROUDCTO|-|",
             "|p|pr|--|PROUDCTO|-|",
@@ -1914,6 +1934,9 @@ c996
             "|-|udi|--|USO O DESTINO|-|",
             "|-|udi|--|USO O DESTINO|-|",
             "|-|udi|--|USO O DESTINO|-|",
+            "|-|td|--|TECNICA DE DIAGNOSTICO|-|",
+            "|-|fab|--|FABRICANTES LEGALES|-|",
+            "|-|po|--|PAIS DE ORIGEN|-|",
             "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
             "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
             "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
@@ -1934,6 +1957,15 @@ c996
             "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
             "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
             "|-|rinv|--|REGISTRO SANITARIO INVIMA|-|",
+            "|-|venc|--|VENCIMIENTO|-|",
+            "|-|venc|--|VENCIMIENTO|-|",
+            "|-|exp|--|EXPEDIENTE|-|",
+            "|-|exp|--|EXPEDIENTE|-|",
+            "|-|mn|--|MERCANCIA NUEVA|-|",
+            "|-|ser|--|SERIAL|-|",
+            "|-|ser|--|SERIAL|-|",
+            "|-|ser|--|SERIAL|-|",
+            "|-|dom|--|DOMICILIO|-|",
             "|-|caja|--|CAJAS|-|",
             "|-|caja|--|CAJAS|-|",
             "|-|cant|--|CANTIDAD|-|",
@@ -1941,29 +1973,23 @@ c996
             "|-|cant|--|CANTIDAD|-|");
         $psSd=array();
         $orderi   = array("/\bDO\b/",
-            "/NOMBRE PRODUCTO/i",
-            "/NOMBRE DEL PRODUCTO/i",
             "/PRODUCTO:/i",
             "/PRODUCTO=/i",
             "/PRODUCTO./i",
             "/PRODUCTO_/i",
             "/\bPRODUCTO\b/i");
 	$replacei = array("|do|DO ",
-            "|pi|PROUDCTO",
-            "|pi|PROUDCTO",
             "|p|PROUDCTO",
             "|p|PROUDCTO",
             "|p|PROUDCTO",
             "|p|PROUDCTO",
             "|p|PROUDCTO");	
         $consec="";
-        
         foreach($dataAsAssocArray as $alpha=>$data){
             
 //            continue;
             if($alpha>0){
-                        
-                $data[2]= mb_strtoupper($data[2]);
+                $data[2]=$data[2];
                 $auxCon=preg_replace($order, $replace,$data[2]);
                 $auxConII=preg_replace($orderi, $replacei,$data[2]);
                 $ps=explode("|p|",$auxCon);
@@ -1971,9 +1997,7 @@ c996
                 $psSd[$alpha-2]=$psi;
                 $arrProd[$alpha]["idprod"]=$data[0];
                 $arrProd[$alpha]["do"]=$ps[0];
-//                echo "<pre>";
-//                        print_r($auxCon);
-//                        echo "</pre>";
+                
                 unset($ps[0]);
                 foreach($ps as $ini=>$ab){
                     $pii=explode("|-|",$ab);
@@ -1988,17 +2012,15 @@ c996
                                         //echo $aux."------producto - ".$pii[$pk+1]."<br>";
                                         $arrProd[$alpha]["cont"][$ini][0]= $pii[$pk+1];
                                 break;
-
                                 case "ma":
                                         $aux=$pk+1;
                                         //echo $aux."------marca - ".$pii[$pk+1]."<br>";
-                                        $arrProd[$alpha]["cont"][$ini][1]= trim($pii[$pk+1],":,.");
+                                        $arrProd[$alpha]["cont"][$ini][1]=$pii[$pk+1];
                                 break;
                                 case "mo":
                                         $aux=$pk+1;
                                         //echo $aux."------modelo - ".$pii[$pk+1]."<br>";
-                                        $arrProd[$alpha]["cont"][$ini][2]=trim($pii[$pk+1],":,.");
-
+                                        $arrProd[$alpha]["cont"][$ini][2]=$pii[$pk+1];
                                 break;
                                 case "ref":
                                         $aux=$pk+1;
@@ -2025,20 +2047,60 @@ c996
                                                 $arrProd[$alpha]["cont"][$ini][4].=$pii[$pk+1];
                                         }
                                 break;
+                                case "td":
+                                        $aux=$pk+1;
+                                        //echo $aux."------tecnica de diagnóstico - ".$pii[$pk+1]."<br>";
+                                        $arrProd[$alpha]["cont"][$ini][5]=$pii[$pk+1];
+                                break;
+                                case "ser":
+                                        $aux=$pk+1;
+                                        //echo $aux."------serial - ".$pii[$pk+1]."<br>";
+                                        $arrProd[$alpha]["cont"][$ini][6]=$pii[$pk+1];
+                                break;
+                                case "fab":
+                                        $aux=$pk+1;
+                                        //echo $aux."------fabricante - ".$pii[$pk+1]."<br>";
+                                        $arrProd[$alpha]["cont"][$ini][7]=$pii[$pk+1];
+                                break;
+                                case "po":
+                                        $aux=$pk+1;
+                                        //echo $aux."------país de origen - ".$pii[$pk+1]."<br>";
+                                        $arrProd[$alpha]["cont"][$ini][8]=$pii[$pk+1];
+                                break;
                                 case "rinv":
                                         $aux=$pk+1;
                                         //echo $aux."------registro invima - ".$pii[$pk+1]."<br>";
-                                        $arrProd[$alpha]["cont"][$ini][5]=$pii[$pk+1];
+                                        $arrProd[$alpha]["cont"][$ini][9]=$pii[$pk+1];
+                                break;
+                                case "venc":
+                                        $aux=$pk+1;
+                                        //echo $aux."------vencimiento - ".$pii[$pk+1]."<br>";
+                                        $arrProd[$alpha]["cont"][$ini][10]=$pii[$pk+1];
+                                break;
+                                case "exp":
+                                        $aux=$pk+1;
+                                        //echo $aux."------expediente - ".$pii[$pk+1]."<br>";
+                                        $arrProd[$alpha]["cont"][$ini][11]=$pii[$pk+1];
+                                break;
+                                case "mn":
+                                        $aux=$pk+1;
+                                        //echo $aux."------mercancia nueva - ".$pii[$pk+1]."<br>";
+                                        $arrProd[$alpha]["cont"][$ini][12]=$pii[$pk+1];
                                 break;
                                 case "cant":
                                         $aux=$pk+1;
                                         //echo $aux."------mercancia nueva - ".$pii[$pk+1]."<br>";
-                                        $arrProd[$alpha]["cont"][$ini][6]=$pii[$pk+1];
+                                        $arrProd[$alpha]["cont"][$ini][13]=$pii[$pk+1];
                                 break;
                                 case "caja":
                                         $aux=$pk+1;
                                         //echo $aux."------mercancia nueva - ".$pii[$pk+1]."<br>";
-                                        $arrProd[$alpha]["cont"][$ini][7]=$pii[$pk+1];
+                                        $arrProd[$alpha]["cont"][$ini][14]=$pii[$pk+1];
+                                break;
+                                case "dom":
+                                        $aux=$pk+1;
+                                        //echo $aux."------mercancia nueva - ".$pii[$pk+1]."<br>";
+                                        $arrProd[$alpha]["cont"][$ini][15]=$pii[$pk+1];
                                 break;
                             }
                         }
@@ -2052,29 +2114,29 @@ c996
 //            echo "</pre>";
 //            
 //        exit();
-//        foreach($arrProd as $lp=>$prod){
-//            if(isset($prod["cont"]) && is_array($prod["cont"])){
-//                foreach($prod["cont"] as  $lpi=>$lpas){
-//                    for($i=0;$i<=7;$i++){
-//                        if($i==6 && isset($lpas[6])){
-//                            $pres=explode(" ",$arrProd[$lp]["cont"][$lpi][6]);
-//                            if(is_array($pres) && count($pres)>=2){
-//                                if(isset($pres[2])){
-//                                        $arrProd[$lp]["cont"][$lpi][$i]=$pres[2];
-//                                }
-//                                else{
-//                                        $arrProd[$lp]["cont"][$lpi][$i]="S.I";
-//                                }
-//                            }
-//                        }
-//                        else if(!isset($lpas[$i])){
-//                                $arrProd[$lp]["cont"][$lpi][$i]="S.I";
-//                        }
-//                    }
-//                    ksort($arrProd[$lp]["cont"][$lpi]);
-//                }
-//            }
-//        }
+        foreach($arrProd as $lp=>$prod){
+            if(isset($prod["cont"]) && is_array($prod["cont"])){
+                foreach($prod["cont"] as  $lpi=>$lpas){
+                    for($i=0;$i<=15;$i++){
+                        if($i==14 && isset($lpas[13])){
+                            $pres=explode(" ",$arrProd[$lp]["cont"][$lpi][13]);
+                            if(is_array($pres) && count($pres)>=2){
+                                if(isset($pres[2])){
+                                        $arrProd[$lp]["cont"][$lpi][$i]=$pres[2];
+                                }
+                                else{
+                                        $arrProd[$lp]["cont"][$lpi][$i]="S.I";
+                                }
+                            }
+                        }
+                        else if(!isset($lpas[$i])){
+                                $arrProd[$lp]["cont"][$lpi][$i]="S.I";
+                        }
+                    }
+                    ksort($arrProd[$lp]["cont"][$lpi]);
+                }
+            }
+        }
         
         foreach($arrProd as $lp=>$prod){
             $cont=0;
