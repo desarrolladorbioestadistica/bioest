@@ -103,17 +103,17 @@
             <div class="menu">
                 <ul class="list">
                     <li class="header">NAVEGACIÓN PRINCIPAL</li>
-                    <li>
+<!--                    <li>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">text_fields</i>
                             <span>Consultas</span>
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/site/searchProcedimiento">Consultar entidades</a>
+                                <a href="<?php // echo Yii::app()->request->baseUrl; ?>/index.php/site/searchProcedimiento">Consultar entidades</a>
                             </li>
                         </ul>
-                    </li>
+                    </li>-->
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">text_fields</i>

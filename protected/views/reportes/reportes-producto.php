@@ -28,16 +28,12 @@
     <script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
 <div id="divReportProduct">
     <div class="block-header">
-        <h2>REPORTES</h2>
+        <h2>REPORTES PRODUCTO</h2>
     </div>
     <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
-                <div class="header">
-                    <h2>
-                        Entidad Producto
-                    </h2>
-                </div>
+                
                 <div class="body">
                     <form id="formReport">
                         <button type="button" class="btn bg-pink waves-effect m-b-15" id="consultar-reporte">CONSULTAR</button>
