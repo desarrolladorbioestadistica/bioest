@@ -121,22 +121,22 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/reportes/reportesProducto">Consultar productos</a>
+                                <a href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/reportes/reportesProducto">Productos</a>
                             </li>
                             <li>
-                                <a href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/reportes/reportesDian">Consultar Dian</a>
+                                <a href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/reportes/reportesDian">Dian</a>
                             </li>
                             <li>
-                                <a href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/reportes/reportesAfiliacion">Consultar afiliaciones</a>
+                                <a href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/reportes/reportesAfiliacion">Afiliaciones</a>
                             </li>
                             <li>
-                                <a href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/reportes/reportesProcedimiento">Consultar procedimientos </a>
+                                <a href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/reportes/reportesProcedimiento">Procedimientos </a>
                             </li>
                             <li>
-                                <a href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/reportes/reportesServicios">Consultar servicios prestador</a>
+                                <a href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/reportes/reportesServicios">Servicios prestador</a>
                             </li>
                             <li>
-                                <a href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/reportes/reportesCapInstalada">Consultar capacidad instalada prestador</a>
+                                <a href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/reportes/reportesCapInstalada">Capacidad instalada prestador</a>
                             </li>
                         </ul>
                     </li>
