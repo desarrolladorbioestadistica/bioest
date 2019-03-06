@@ -1542,7 +1542,7 @@ c996
     public function loadProcedimientoPrestador($dir,$filename,$tablename){
         Yii::import('ext.phpexcelreader.JPhpExcelReader');
         $data=new JPhpExcelReader($dir.$filename);
-        $sql="INSERT INTO procedimiento_prestador (id_prestador,id_procedimiento,id_quinquenio,id_tipousuario,id_grupopoblacional,mes,anio,numero_atenciones,numero_personas_atendidas,costo_procedimiento) VALUES (:id_prestador,:id_procedimiento,:id_quinquenio,:id_tipousuario,:id_grupopoblacional,:mes,:anio,:numero_atenciones,:numero_personas_atendidas,:costo_procedimiento)";
+        $sql="INSERT INTO procedimiento_prestador (id_prestador,id_procedimiento,id_quinquenio,id_tipousuario,id_grupopoblacional,mes,anio,numero_atenciones,numero_personas_atendidas,costo_procedimiento,id_admin) VALUES (:id_prestador,:id_procedimiento,:id_quinquenio,:id_tipousuario,:id_grupopoblacional,:mes,:anio,:numero_atenciones,:numero_personas_atendidas,:costo_procedimiento,:id_admin)";
         $numRows= count($data->sheets[0]['cells']);
         $conn=Yii::app()->db;
         $query=$conn->createCommand($sql);
@@ -1559,6 +1559,7 @@ c996
                 $modeloTipoUsuario= TipoUsuario::model()->findByAttributes(array("id_tipousuario"=>$data[4]));
 //                $modeloTipoAtencion= TipoAtencion::model()->findByAttributes(array("id_tipoatencion"=>$data[5]));
                 $modelGrupoPoblacional= GrupoPoblacional::model()->findByAttributes(array("id_grupopoblacional"=>$data[7]));
+                $modelAdministrador= Administrador::model()->findByAttributes(array("id_admin"=>$data[11]));
                 try{
                     if(empty($modeloPrestador->id_prestador)){throw new Exception("1");}else{$data[1]=$modeloPrestador->id_prestador;}
                     if(empty($modeloProcedimiento->id_procedimiento)){throw new Exception("2");}else{$data[2]=$modeloProcedimiento->id_procedimiento;}
@@ -1566,6 +1567,7 @@ c996
                     if(empty($modeloTipoUsuario->id_tipousuario)){throw new Exception("4");}else{$data[4]=$modeloTipoUsuario->id_tipousuario;}
 //                    if(empty($modeloTipoAtencion->id_tipoatencion)){throw new Exception("5");}else{$data[5]=$modeloTipoAtencion->id_tipoatencion;}
                     if(empty($modelGrupoPoblacional->id_grupopoblacional)){throw new Exception("7");}
+                    if(empty($modelAdministrador->id_admin)){throw new Exception("11");}
                     $modelMes= Mes::model()->findByAttributes(array("nombre_mes"=>$data[5]));
                     $data[5]=$modelMes->id_mes;
                     (empty($data[7]))?$data[6]=null:"";
@@ -1582,6 +1584,7 @@ c996
                     $query->bindParam(":numero_atenciones",$data[8]);
                     $query->bindParam(":numero_personas_atendidas",$data[9]);
                     $query->bindParam(":costo_procedimiento",$data[10]);
+                    $query->bindParam(":id_admin",$data[11]);
                     $query->execute(); 
 //                    try{
 //                        $query->execute(); 
