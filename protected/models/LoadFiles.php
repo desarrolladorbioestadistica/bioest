@@ -1559,7 +1559,7 @@ c996
                 $modeloTipoUsuario= TipoUsuario::model()->findByAttributes(array("id_tipousuario"=>$data[4]));
 //                $modeloTipoAtencion= TipoAtencion::model()->findByAttributes(array("id_tipoatencion"=>$data[5]));
                 $modelGrupoPoblacional= GrupoPoblacional::model()->findByAttributes(array("id_grupopoblacional"=>$data[7]));
-                $modelAdministrador= Administrador::model()->findByAttributes(array("id_admin"=>$data[11]));
+                $modelAdministrador= Administrador::model()->findByAttributes(array("codigo_eps"=>$data[11]));
                 try{
                     if(empty($modeloPrestador->id_prestador)){throw new Exception("1");}else{$data[1]=$modeloPrestador->id_prestador;}
                     if(empty($modeloProcedimiento->id_procedimiento)){throw new Exception("2");}else{$data[2]=$modeloProcedimiento->id_procedimiento;}
@@ -1568,6 +1568,7 @@ c996
 //                    if(empty($modeloTipoAtencion->id_tipoatencion)){throw new Exception("5");}else{$data[5]=$modeloTipoAtencion->id_tipoatencion;}
                     if(empty($modelGrupoPoblacional->id_grupopoblacional)){throw new Exception("7");}
                     if(empty($modelAdministrador->id_admin)){throw new Exception("11");}
+                    $data[11]=$modelAdministrador->id_admin;
                     $modelMes= Mes::model()->findByAttributes(array("nombre_mes"=>$data[5]));
                     $data[5]=$modelMes->id_mes;
                     (empty($data[7]))?$data[6]=null:"";
