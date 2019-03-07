@@ -7,7 +7,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>Bio-estadística</title>
     <!-- Favicon-->
-    <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
@@ -103,6 +103,33 @@
             <div class="menu">
                 <ul class="list">
                     <li class="header">NAVEGACIÓN PRINCIPAL</li>
+                    <li class="active">
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">description</i>
+                            <span>Subir Archivos</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/site/formLoadPFiles">
+                                    <i class="material-icons">description</i>
+                                    <span>Primarios</span>
+                                </a>
+                                
+                            </li>
+                            <li>
+                                <a href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/site/formLoadSFiles">
+                                    <i class="material-icons">description</i>
+                                    <span>Secundarios</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/site/formDisgregateProducts">
+                                    <i class="material-icons">description</i>
+                                    <span>Desagregar productos</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">text_fields</i>
